@@ -508,8 +508,9 @@ def main():
     )
     input_abundance.add_argument(
         '--counts10x',
-        metavar='<counts10x.txt>',
-        help='file containing coverage information (default: %(default)s).'
+        metavar='<10x_abundance_probabilities.txt>',
+        type=str,
+        help='file containing barcode count probabilities'
     )
     parser_gen.add_argument(
         '--n_reads',
