@@ -130,8 +130,9 @@ def simulate_read(record, ErrorModel, i, cpu_number):
     bounds = (forward_start, forward_end)
     # create a perfect read
     forward = SeqRecord(
+
         Seq(str(sequence[forward_start:forward_end])),
-        id='%s_%s_%s/1' % (header, i, cpu_number),
+        id='SIMREAD.%s.%s:1___%s' % (i, cpu_number, header),
         description=''
     )
     # add the indels, the qual scores and modify the record accordingly
@@ -154,7 +155,7 @@ def simulate_read(record, ErrorModel, i, cpu_number):
     # create a perfect read
     reverse = SeqRecord(
         Seq(rev_comp(str(sequence[reverse_start:reverse_end]))),
-        id='%s_%s_%s/2' % (header, i, cpu_number),
+        id='SIMREAD.%s.%s:2___%s' % (i, cpu_number, header),
         description=''
     )
     # add the indels, the qual scores and modify the record accordingly

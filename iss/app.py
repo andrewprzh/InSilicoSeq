@@ -160,6 +160,16 @@ def generate_reads(args):
             else:
                 abundance_dic = abundance.parse_abundance_file(
                     args.abundance_file)
+        elif args.counts10x:
+            abundance_10x_values = []
+            abundance_10x_probs = []
+            for l in open(args.counts10x):
+                if l.startswith("#"):
+                    continue
+                t = l.strip().split()
+                abundance_10x_values.append(int(t[0]))
+                abundance_10x_probs.append(float(t[1]))
+
         elif args.coverage_file:
             logger.warning('--coverage_file is an experimental feature')
             logger.warning('--coverage_file disables --n_reads')
@@ -243,18 +253,21 @@ def generate_reads(args):
                                     % record.id)
                         genome_size = len(record.seq)
 
-                        if args.coverage or args.coverage_file:
-                            coverage = species_abundance
+                        if args.counts10x:
+                            n_pairs = np.random.choice(abundance_10x_values, p = abundance_10x_probs)
                         else:
-                            coverage = abundance.to_coverage(
-                                n_reads,
-                                species_abundance,
-                                err_mod.read_length,
-                                genome_size
-                            )
-                        n_pairs = int(round(
-                            (coverage *
-                                len(record.seq)) / err_mod.read_length) / 2)
+                            if args.coverage or args.coverage_file:
+                                coverage = species_abundance
+                            else:
+                                coverage = abundance.to_coverage(
+                                    n_reads,
+                                    species_abundance,
+                                    err_mod.read_length,
+                                    genome_size
+                                )
+                            n_pairs = int(round(
+                                (coverage *
+                                    len(record.seq)) / err_mod.read_length) / 2)
                         # skip record if n_reads == 0
                         if n_pairs == 0:
                             continue
@@ -491,6 +504,11 @@ def main():
         '--coverage_file',
         '-D',
         metavar='<coverage.txt>',
+        help='file containing coverage information (default: %(default)s).'
+    )
+    input_abundance.add_argument(
+        '--counts10x',
+        metavar='<counts10x.txt>',
         help='file containing coverage information (default: %(default)s).'
     )
     parser_gen.add_argument(
