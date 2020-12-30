@@ -243,7 +243,10 @@ def generate_reads(args):
                 for record in fasta_file:
                     # generate reads for records
                     try:
-                        species_abundance = abundance_dic[record.id]
+                        if args.counts10x:
+                            species_abundance = 1
+                        else:
+                            species_abundance = abundance_dic[record.id]
                     except KeyError as e:
                         logger.error(
                             'Fasta record not found in abundance file: %s' % e)
