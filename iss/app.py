@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from iss import bam
-from iss import util
-from iss import download
-from iss import abundance
-from iss import generator
-from iss.version import __version__
+import bam
+import util
+import download
+import abundance
+import generator
+from version import __version__
 
 from Bio import SeqIO
 from joblib import Parallel, delayed, load, dump
@@ -35,7 +35,7 @@ def generate_reads(args):
     logger.debug('Using verbose logger')
 
     try:  # try to import and load the correct error model
-        logger.info('Starting iss generate')
+        logger.info('Starting iss generate, 10X BRANCH')
         logger.info('Using %s ErrorModel' % args.mode)
         if args.seed:
             logger.info('Setting random seed to %i' % args.seed)

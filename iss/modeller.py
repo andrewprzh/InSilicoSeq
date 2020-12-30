@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from iss import util
+import util
 from scipy import stats
 from joblib import Parallel, delayed
 

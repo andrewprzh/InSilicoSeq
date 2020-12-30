@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from iss.util import load, rev_comp
+from util import load, rev_comp
 
 from Bio import SeqIO
 from Bio.Seq import Seq

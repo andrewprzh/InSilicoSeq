@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from iss import util
-from iss import modeller
+import util
+import modeller
 
 from scipy import stats
 from random import random
